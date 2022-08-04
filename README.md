@@ -23,4 +23,4 @@ semua technical test untuk task 2 dapat dilihat di folder [2.QUERY](https://gith
 
 ## Task 3
 
-Membuat Fungsi untuk mendapatkan index array yang sama secara berurutan dengan membandingkan dua array dapat dilihat [disini](https://ideone.com/CkNJHe "query 3").
+Membuat Fungsi untuk mendapatkan index array yang sama secara berurutan dengan membandingkan dua array dapat dilihat [disini](https://ideone.com/CkNJHe "query 3").  jika tidak bisa diakses ada code alternatif [disini](https://github.com/vreallyla/tm_test/tree/master/3.LOGIC_TEST/compareTwoArray.js "query 3")
