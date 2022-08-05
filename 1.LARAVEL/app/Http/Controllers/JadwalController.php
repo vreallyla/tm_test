@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hari;
+use App\Models\MJadwal;
 use App\Models\MPoli;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
@@ -14,7 +16,7 @@ class JadwalController extends Controller
 
     public function __construct()
     {
-        $this->model = new MPoli();
+        $this->model = new MJadwal();
         $this->view = 'pages.jadwal.jadwal_index';
     }
 
@@ -26,18 +28,18 @@ class JadwalController extends Controller
      */
     public function index()
     {
-        return view($this->view, $this->model->defaultData());
+        return view($this->view, [...$this->model->defaultData(), 'haris' => Hari::select('id as kode', 'nama')->get()]);
     }
 
     public function printout()
     {
-        $poli=( MPoli::with([
+        $poli = MPoli::with([
             'mPegawai'
-        ])->get()->toArray());
+        ])->get()->toArray();
 
-        $pdf = PDF::loadView('cetak.jadwal', compact('poli'))->setPaper('a4', 'landscape' );
-        return $pdf->download("jadwal_".now()->format('Y-m-d').".pdf");
-
+        return view('cetak.jadwal', compact('poli'));
+        $pdf = PDF::loadView('cetak.jadwal', compact('poli'))->setPaper('a4', 'landscape');
+        return $pdf->download("dasdasd.pdf");
     }
 
     /**

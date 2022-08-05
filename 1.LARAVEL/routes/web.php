@@ -25,7 +25,7 @@ Route::get('/', function () {
     // return view('welcome');
 });
 
-Route::get('/jadwal/export', [JadwalController::class, 'printout']);
+Route::get('/jadwal/export', [JadwalController::class, 'printout'])->name('jadwal.export');
 Route::resource('/jadwal', JadwalController::class)->except([
     'show'
 ]);

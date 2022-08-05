@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class MJadwal extends Model
 {
@@ -27,5 +28,18 @@ class MJadwal extends Model
     public function scopePegawaiRelation($query)
     {
         $query->leftJoin('m_pegawai as mpe', 'mpe.id', 'mj.m_pegawai_id');
+    }
+
+    public static function defaultData()
+    {
+       return  ['jadwal' => MPoli::select(
+            'id',
+            'nama',
+        )
+            ->get(),
+
+        'dokter' => MPegawai::where('job_desc_id', 1)->select('id as kode', 'nama')->get(),
+        ];
+
     }
 }
