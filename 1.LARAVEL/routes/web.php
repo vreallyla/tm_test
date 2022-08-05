@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\PengaturanController;
+use App\Http\Controllers\PoliController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +17,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::resource('/jadwal', JadwalController::class)->except([
+    'show'
+]);
+Route::resource('/pengaturan', PengaturanController::class)->except([
+    'show'
+]);
+Route::resource('/poli', PoliController::class)->except([
+    'show'
+]);
+Route::resource('/pegawai', PegawaiController::class)->except([
+    'show'
+]);
