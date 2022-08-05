@@ -39,51 +39,36 @@ class JadwalController extends Controller
 
         return view('cetak.jadwal', compact('poli'));
         $pdf = PDF::loadView('cetak.jadwal', compact('poli'))->setPaper('a4', 'landscape');
-        return $pdf->download("dasdasd.pdf");
+        return $pdf->download("jadwal_" . now()->format('Y-m-d') . ".pdf");
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
-     * Store a newly created resource in storage.
+     * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
-    }
+        $validate = $request->validate([
+            'm_pegawai_id' => ['exists:m_pegawai,id', 'required'],
+            'hari_id' => ['exists:hari,id', 'required'],
+            'jam_pulang' => ['required'],
+            'jam_masuk' => ['required'],
+        ]);
 
+        $check = MJadwal::where('m_pegawai_id', $request->m_pegawai_id)
+            ->where('hari_id', $request->hari_id)
+            ->first();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  string  $pegawai
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($pegawai)
-    {
-    }
+        if ($check)
+            $check->update($validate);
+        else
+            MJadwal::create($validate);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        return redirect()->route('jadwal.index')->with('status', 'Jadwal berhasil diatur!');
     }
 
     /**

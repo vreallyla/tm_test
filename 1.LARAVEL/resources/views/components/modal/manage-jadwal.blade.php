@@ -13,9 +13,9 @@
 
 
                 <!-- Modal body -->
-                <form class="py-12 px-6 flex flex-col items-center text-white">
+                <form class="py-12 px-6 flex flex-col items-center text-white" action="{{route('jadwal.store')}}" method="POST">
                     <div class="grid grid-cols-2 gap-2">
-
+@csrf
                         {{-- PEGAWAI --}}
                         <x-forms.select :required="true" name="m_pegawai_id" label="Pilih Dokter" :opts="$dokter"
                             value="{{ isset($detail) ? $detail->m_pegawai_id : '' }}" />
@@ -32,6 +32,8 @@
                     <div class="w-full">
                         <button type="submit"
                             class="bg-sky-500 hover:bg-sky-600 text-sky-100 hover:text-badge rounded-lg w-full py-2 mt-4">Simpan</button>
+                        <button type="button" @click="openUpdate=false"
+                            class="bg-slate-200 hover:bg-slate-300 text-slate-500 hover:text-slate-600 rounded-lg w-full py-2 mt-4">Kembali</button>
                     </div>
                 </form>
                 <div id="loaded-jadwal"
@@ -71,8 +73,8 @@
                         const masuk = data.jam_masuk;
                         const keluar = data.jam_pulang;
 
-                        jamMasuk.value = masuk ? masuk : ''
-                        jamKeluar.value = keluar ? keluar : ''
+                        jamMasuk.value = masuk ? masuk.substr(0,5) : ''
+                        jamKeluar.value = keluar ? keluar.substr(0,5) : ''
 
                         if (loading) {
 

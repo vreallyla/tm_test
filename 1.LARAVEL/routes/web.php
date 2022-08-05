@@ -27,7 +27,7 @@ Route::resource('/jadwal', JadwalController::class)->except([
     'show'
 ]);
 Route::resource('/pengaturan', PengaturanController::class)->except([
-    'show'
+    'show','edit','create','update'
 ]);
 Route::resource('/poli', PoliController::class)->except([
     'show'
