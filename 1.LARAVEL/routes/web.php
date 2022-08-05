@@ -5,6 +5,7 @@ use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\PoliController;
 use Illuminate\Support\Facades\Route;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,10 +18,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    // return view('cetak.jadwal');
+    // $pdf = PDF::loadView('cetak.jadwal', [])->setPaper('a4', 'landscape')->setWarnings(false)->save('myfile.pdf');
 
+    // return view('welcome');
+});
+
+Route::get('/jadwal/export', [JadwalController::class, 'printout']);
 Route::resource('/jadwal', JadwalController::class)->except([
     'show'
 ]);

@@ -10,6 +10,12 @@ class MJadwal extends Model
     use HasFactory;
 
     protected $table = 'm_jadwal';
+    private $alias = 'mj';
+
+    public function scopeSetAlias($query)
+    {
+        return $query->from($this->table . " as " . $this->alias);
+    }
 
     protected $fillable = [
         'm_pegawai_id',
@@ -17,4 +23,9 @@ class MJadwal extends Model
         'jam_masuk',
         'jam_pulang',
     ];
+
+    public function scopePegawaiRelation($query)
+    {
+        $query->leftJoin('m_pegawai as mpe', 'mpe.id', 'mj.m_pegawai_id');
+    }
 }

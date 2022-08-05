@@ -2,18 +2,42 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MPoli;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+
 
 class JadwalController extends Controller
 {
+    private $model;
+    private $view;
+
+    public function __construct()
+    {
+        $this->model = new MPoli();
+        $this->view = 'pages.jadwal.jadwal_index';
+    }
+
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        return view($this->view, $this->model->defaultData());
+    }
+
+    public function printout()
+    {
+        $poli=( MPoli::with([
+            'mPegawai'
+        ])->get()->toArray());
+
+        $pdf = PDF::loadView('cetak.jadwal', compact('poli'))->setPaper('a4', 'landscape' );
+        return $pdf->download("jadwal_".now()->format('Y-m-d').".pdf");
+
     }
 
     /**
@@ -46,7 +70,6 @@ class JadwalController extends Controller
      */
     public function edit($pegawai)
     {
-       
     }
 
     /**

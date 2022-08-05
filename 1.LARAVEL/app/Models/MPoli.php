@@ -72,4 +72,9 @@ class MPoli extends Model
     {
         $query->leftJoin('m_pegawai as mpe', 'mpe.m_poli_id', 'mp.id');
     }
+
+    public function mPegawai()
+    {
+        return $this->hasMany(MPegawai::class,'m_poli_id','id')->where('job_desc_id',1);
+    }
 }

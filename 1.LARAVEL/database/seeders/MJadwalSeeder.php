@@ -42,8 +42,12 @@ class MJadwalSeeder extends Seeder
 
         foreach ($data as $dt) {
             $index = rand(0, 3);
-            for ($i = 0; $i < rand(1, 3); $i++) {
-                $day = Hari::select('id')->inRandomOrder()->first();
+            $hari = [];
+            for ($i = 0; $i < rand(1, 2); $i++) {
+                $day = Hari::select('id')->inRandomOrder()
+                    ->when(count($hari), fn ($q) => $q->whereNotIn('id',$hari))
+                    ->first();
+                $hari[] = $day->id;
                 MJadwal::create([
                     'm_pegawai_id' => $dt->id,
                     'hari_id' => $day->id,
