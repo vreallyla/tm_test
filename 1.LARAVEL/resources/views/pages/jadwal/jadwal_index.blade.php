@@ -1,5 +1,5 @@
 <x-layouts.extend title="Pengaturan" page="jadwal">
-    <div x-data="{ deleteName: null, deleteCode: null, openUpdate:false }">
+    <div x-data="{ deleteName: null, deleteCode: null, openUpdate: false }">
         <div class="pt-8 flex gap-x-5">
 
             {{-- MENU --}}
@@ -22,8 +22,7 @@
                         </form>
                         <div class="flex-none"><button
                                 class="group flex gap-x-1 items-center justify-center w-44 h-9 text-white bg-sky-500 hover:bg-sky-600 rounded-md"
-                                @click="openUpdate=true"
-                                style="height: 36px;">
+                                @click="openUpdate=true" style="height: 36px;">
                                 <svg class="text-teal-100 text-2xl group-hover:text-white" stroke="currentColor"
                                     fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em"
                                     width="1em" xmlns="http://www.w3.org/2000/svg">
@@ -99,12 +98,20 @@
                                     <td></td>
                                 </tr>
                                 @foreach ($item->mPegawai as $dt)
-                                    <tr class="bg-slate-300 text-black h-8">
+                                    <tr class="bg-slate-300 text-black h-8" x-data="{{ json_encode($dt) }}">
                                         <td class="w-no text-center sticky left-0 bg-slate-300"></td>
-                                        <td class="w-klinik px-2 w-[180px] sticky left-10 bg-slate-300">{{ $dt->nama }}</td>
+                                        <td class="w-klinik px-2 w-[180px] sticky left-10 bg-slate-300">
+                                            {{ $dt->nama }}</td>
                                         @foreach ($hari->getJadwal($dt['id'])->get() as $dt)
-                                            <td class="text-center">
-                                                {{ $dt->jam_masuk ? $dt->jam_masuk . ' - ' . $dt->jam_pulang : '' }}
+                                            <td class=" text-center " x-data="{{ json_encode($dt) }}">
+                                                <div class="group relative flex justify-center items-center">
+
+                                                    {{ $dt->jam_masuk ? $dt->jam_masuk . ' - ' . $dt->jam_pulang : '' }}
+                                                    <button @click="deleteName=nama+' jam '+jam_masuk;deleteCode=id"
+                                                        class="top-[-21px] absolute hidden group-hover:block bg-rose-500 text-white rounded-md px-2 py-1">Hapus</button>
+                                                </div>
+
+
                                             </td>
                                         @endforeach
                                 @endforeach
@@ -122,7 +129,7 @@
         </div>
         {{-- modal --}}
         <x-modal.message />
-        <x-modal.delete />
-        <x-modal.manage-jadwal :dokter="$dokter" :hari="$haris"/>
+        <x-modal.delete path="{{ route('jadwal.index') }}" />
+        <x-modal.manage-jadwal :dokter="$dokter" :hari="$haris" />
     </div>
 </x-layouts.extend>

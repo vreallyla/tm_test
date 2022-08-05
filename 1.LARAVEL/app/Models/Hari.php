@@ -44,13 +44,13 @@ class Hari extends Model
 
     public function scopeGetJadwal($query, $pegawai_id)
     {
-        $sub = MJadwal::where('m_pegawai_id', $pegawai_id)->select('jam_masuk', 'jam_pulang', 'hari_id');
+        $sub = MJadwal::where('m_pegawai_id', $pegawai_id)->select('id','jam_masuk', 'jam_pulang', 'hari_id');
 
         $query->setAlias()
             ->leftJoinSub($sub, 'sub', function ($join) {
                 $join->on('h.id', '=', 'sub.hari_id');
             })
-            ->select(DB::raw('DISTINCT h.id'), 'jam_masuk', 'jam_pulang')
+            ->select(DB::raw('DISTINCT h.id as hari_id'),'sub.id', 'jam_masuk', 'jam_pulang')
             ->orderBy('h.id');
     }
 }

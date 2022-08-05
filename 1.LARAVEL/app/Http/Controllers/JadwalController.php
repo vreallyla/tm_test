@@ -77,8 +77,9 @@ class JadwalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(MJadwal $jadwal)
     {
-        //
+        $jadwal->delete();
+        return redirect()->route('jadwal.index')->with('status', 'Jadwal berhasil dihapus!');
     }
 }
