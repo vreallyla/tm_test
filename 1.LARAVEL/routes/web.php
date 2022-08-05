@@ -19,10 +19,7 @@ use Barryvdh\DomPDF\Facade\Pdf as PDF;
 */
 
 Route::get('/', function () {
-    // return view('cetak.jadwal');
-    // $pdf = PDF::loadView('cetak.jadwal', [])->setPaper('a4', 'landscape')->setWarnings(false)->save('myfile.pdf');
-
-    // return view('welcome');
+    return redirect()->route('poli.index');
 });
 
 Route::get('/jadwal/export', [JadwalController::class, 'printout'])->name('jadwal.export');
