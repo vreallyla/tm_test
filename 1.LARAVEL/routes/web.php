@@ -24,10 +24,8 @@ Route::get('/', function () {
 
 Route::get('/jadwal/export', [JadwalController::class, 'printout'])->name('jadwal.export');
 Route::resource('/jadwal', JadwalController::class)->except([
-    'show'
-]);
-Route::resource('/pengaturan', PengaturanController::class)->except([
-    'show','edit','create','update'
+    'show', 'edit', 'create', 'update'
+
 ]);
 Route::resource('/poli', PoliController::class)->except([
     'show'

@@ -37,7 +37,6 @@ class JadwalController extends Controller
             'mPegawai'
         ])->get()->toArray();
 
-        return view('cetak.jadwal', compact('poli'));
         $pdf = PDF::loadView('cetak.jadwal', compact('poli'))->setPaper('a4', 'landscape');
         return $pdf->download("jadwal_" . now()->format('Y-m-d') . ".pdf");
     }
